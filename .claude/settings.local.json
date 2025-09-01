@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(source .env)",
+      "Bash(echo:*)",
+      "Bash(ssh:*)",
+      "Bash(ls:*)",
+      "Bash(cp:*)",
+      "Bash(scp:*)",
+      "Bash(grep:*)",
+      "Bash(python3:*)",
+      "Bash(env)",
+      "Bash(kubectl get:*)",
+      "Bash(./render_engine_real_test.sh:*)",
+      "Bash(./simple_browser_render_test.sh:*)",
+      "Bash(./javascript_execution_performance_test.sh:*)",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(ss:*)",
+      "Bash(systemctl list-units:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git config:*)",
+      "Bash(nslookup:*)",
+      "Bash(kubectl exec:*)",
+      "Bash(rm:*)",
+      "WebFetch(domain:dashboard-wiseiot-ensaas.yesiang.com)",
+      "WebFetch(domain:dash-wiseiot-ensaas.yesiang.com)",
+      "Bash(curl:*)",
+      "Bash(kubectl version:*)",
+      "Bash(git remote set-url:*)"
+    ],
+    "deny": []
+  }
+}
