@@ -1,0 +1,17 @@
+# 敏感文件
+*.key
+帳號密碼.txt
+
+# 臨時文件
+*.tmp
+*.temp
+*~
+
+# 系統文件
+.DS_Store
+Thumbs.db
+
+# 測試和分析文件
+*_test*
+*_analysis*
+*_report*

@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-config
+  namespace: monitoring
+data:
+  grafana.ini: |
+    [server]
+    http_port = 3000
+    root_url = http://10.6.50.200:30300/
+    app_title = Dashboard
+    
+    [security]
+    admin_user = admin
+    admin_password = grafana123
+    
+    [users]
+    allow_sign_up = false
+    auto_assign_org = true
+    auto_assign_org_role = Viewer
+    
+    [auth]
+    disable_login_form = false
+    disable_signout_menu = false
+    
+    [auth.generic_oauth]
+    enabled = true
+    name = EnSaaS SSO
+    client_id = grafana-client
+    client_secret = your-client-secret
+    scopes = openid email profile
+    auth_url = https://portal-sso-ensaas.yesiang.com/oauth2/authorize
+    token_url = http://sso.ensaas-service.svc.cluster.local:80/oauth2/token
+    api_url = http://sso.ensaas-service.svc.cluster.local:80/oauth2/userinfo
+    allow_sign_up = true
+    auto_login = false
+    role_attribute_path = contains(roles[*], 'admin') && 'Admin' || contains(roles[*], 'editor') && 'Editor' || 'Viewer'
+    
+    [log]
+    mode = console
+    level = info
+    
+    [analytics]
+    reporting_enabled = false
+    check_for_updates = false
+    
+    [branding]
+    app_title = Dashboard
+    login_title = Dashboard
+    login_subtitle = 
+    footer_links = 
+    logo_url = https://dashboard-wiseiot-ensaas.yesiang.com/public/img/Dashboard-logo.svg
+    favicon_url = https://dashboard-wiseiot-ensaas.yesiang.com/public/img/Dashboard-logo.svg

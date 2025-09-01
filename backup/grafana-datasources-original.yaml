@@ -1,0 +1,21 @@
+apiVersion: v1
+data:
+  datasources.yaml: "apiVersion: 1\ndatasources:\n  - name: InfluxDB-WISE-IoT\n    type:
+    influxdb\n    access: proxy\n    url: http://influxdb.ensaas-db.svc.cluster.local:8086\n
+    \   database: e315f8c2-1b4e-498d-8aa8-e1c87a211d36\n    user: 92875be6-9b6c-48b1-8d88-3294e92d69be\n
+    \   secureJsonData:\n      password: f7gYHaIqNCh94GdiL8aRM5zRb\n    isDefault:
+    true\n    editable: true\n    jsonData:\n      httpMode: GET\n      keepCookies:
+    []\n    version: 1\n  - name: Prometheus-RMS  \n    type: prometheus\n    access:
+    proxy\n    url: http://ensaas-rms-prometheus.rms.svc.cluster.local:9090\n    isDefault:
+    false\n    editable: true\n    jsonData:\n      httpMethod: GET\n      keepCookies:
+    []\n"
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"datasources.yaml":"apiVersion: 1\ndatasources:\n  - name: InfluxDB-WISE-IoT\n    type: influxdb\n    access: proxy\n    url: http://influxdb.ensaas-db.svc.cluster.local:8086\n    database: e315f8c2-1b4e-498d-8aa8-e1c87a211d36\n    user: 92875be6-9b6c-48b1-8d88-3294e92d69be\n    secureJsonData:\n      password: f7gYHaIqNCh94GdiL8aRM5zRb\n    isDefault: true\n    editable: true\n    jsonData:\n      httpMode: GET\n      keepCookies: []\n    version: 1\n  - name: Prometheus-RMS  \n    type: prometheus\n    access: proxy\n    url: http://ensaas-rms-prometheus.rms.svc.cluster.local:9090\n    isDefault: false\n    editable: true\n    jsonData:\n      httpMethod: GET\n      keepCookies: []\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"grafana-datasources","namespace":"monitoring"}}
+  creationTimestamp: "2025-08-06T05:35:38Z"
+  name: grafana-datasources
+  namespace: monitoring
+  resourceVersion: "54656761"
+  uid: 1bc7dfaf-644b-4b16-95ce-6f11e1d4c35a
