@@ -5,12 +5,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 This is a WISE-IoT Grafana v12 integration project for industrial monitoring dashboard. The project provides:
-- Grafana v12 dashboard with SSO authentication
+- Grafana v12 dashboard with local authentication
 - Industrial monitoring for ovens with temperature, pressure, power, and motor metrics
 - Kubernetes deployment with Nginx reverse proxy
-- Multiple dashboard versions for different monitoring needs
+- One-click installation script with customizable domain configuration
 
 ## Commands
+
+### One-Click Installation
+```bash
+chmod +x install.sh
+./install.sh
+```
 
 ### Kubernetes Deployment
 ```bash
@@ -42,48 +48,46 @@ cp dash-wiseiot.conf /etc/nginx/conf.d/
 
 ### System Flow
 ```
-User → DNS (dash-wiseiot-ensaas.yesiang.com) 
-     → Host Nginx (10.6.50.200:80/443)
-     → K8s Ingress Controller (10.224.0.101)
+User → DNS (custom domain) 
+     → Host Nginx (80/443)
+     → K8s Ingress Controller
      → dash-grafana Service (monitoring namespace)
      → Grafana v12 Pod + InfluxDB
 ```
 
 ### Key Components
-- **Grafana v12**: Main dashboard application with SSO integration
+- **Grafana v12**: Main dashboard application with local authentication
 - **InfluxDB**: Time-series database for IoT metrics
-- **EnSaaS SSO**: Single sign-on authentication system
 - **Nginx Reverse Proxy**: SSL termination and routing
 - **Kubernetes Ingress**: Internal cluster routing
 
 ## File Structure
 
 ### Configuration Files
-- `grafana-config-nodeport.yaml`: Complete Grafana v12 configuration with SSO
-- `dash-wiseiot-ingress.yaml`: Kubernetes Ingress rules
-- `dash-wiseiot.conf`: Nginx reverse proxy configuration
+- `install.sh`: One-click installation script with interactive configuration
+- `grafana-config-nodeport.yaml`: Grafana v12 Kubernetes configuration (no SSO)
+- `dash-wiseiot-ingress.yaml`: Kubernetes Ingress rules template
+- `dash-wiseiot.conf`: Nginx reverse proxy configuration template
 
-### Dashboard Files
-- `oven1_dashboard_v12_corrected_full.json`: **Primary dashboard** - 27 panels, full industrial monitoring
-- `oven1_dashboard_v12_working.json`: Basic dashboard - 5 panels, device status only
-- `oven1_dashboard_v3.json`: Legacy reference dashboard
+### Generated Files
+The install script generates:
+- `dns-setup-guide.txt`: DNS A record setup guide for MIS
+- `mis-checklist.md`: Deployment verification checklist
+- Dynamic configuration files based on user input
 
-### Access Information
-- **Production URL**: https://dash-wiseiot-ensaas.yesiang.com
-- **NodePort Backup**: http://10.6.50.200:30300
-- **SSO Login**: EnSaaS single sign-on (recommended)
-- **Local Login**: admin/grafana123
+## Installation Process
 
-## Development Workflow
-
-1. **Configuration Changes**: Edit YAML files and apply with kubectl
-2. **Dashboard Updates**: Import JSON files through Grafana UI
-3. **SSL Changes**: Update certificates in Nginx configuration
-4. **Testing**: Access via both HTTP/HTTPS to verify routing
+1. **Interactive Configuration**: User specifies domain, subdomain, and credentials
+2. **Environment Check**: Validates kubectl, nginx, curl availability
+3. **Dynamic Configuration**: Generates configs based on user input
+4. **Kubernetes Deployment**: Deploys Grafana v12 with custom settings
+5. **Nginx Setup**: Configures reverse proxy with optional SSL
+6. **Health Verification**: Tests connectivity and service availability
+7. **MIS Documentation**: Generates setup guides for network administrators
 
 ## Data Sources
 
-The project uses InfluxDB datasource with UID `IoTEdge-IoTHub-SimpleJson` for industrial IoT metrics including:
+The project uses InfluxDB datasource for industrial IoT metrics including:
 - Temperature monitoring (oven, auxiliary, exhaust)
 - Pressure monitoring
 - Power consumption
@@ -92,7 +96,8 @@ The project uses InfluxDB datasource with UID `IoTEdge-IoTHub-SimpleJson` for in
 
 ## Important Notes
 
-- This is a production monitoring system for Yesiang Enterprise
-- The complete dashboard requires the InfluxDB datasource to be properly configured
-- SSL certificates are managed externally and referenced in Nginx config
-- SSO integration requires proper EnSaaS service connectivity
+- Uses local Grafana authentication (no external SSO dependency)
+- SSL certificates are configurable during installation
+- Supports both HTTP and HTTPS access
+- All sensitive data is excluded via .gitignore
+- Install script generates MIS documentation automatically
